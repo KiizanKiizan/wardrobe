@@ -24,7 +24,9 @@ export type TMemberBasicSizesEditableKey =
   | "dropSizeAdmin";
 
 export type TMemberBasicSizes = {
-  [key in TMemberBasicSizesKey]: number;
+  [key in TMemberBasicSizesKey]: key extends "tops" | "bottoms"
+    ? number | null
+    : number;
 };
 
 export type TMemberPartSizesKey =

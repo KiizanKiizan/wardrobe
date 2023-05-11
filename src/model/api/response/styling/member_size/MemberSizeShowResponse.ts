@@ -2,9 +2,9 @@ export interface MemberSizeShowResponse {
   readonly bmi: number;
   readonly height: number;
   readonly weight: number;
-  readonly sizeTops: number;
+  readonly sizeTops: number | null;
   readonly sizeTopsAdmin: number;
-  readonly sizeBottoms: number;
+  readonly sizeBottoms: number | null;
   readonly sizeBottomsAdmin: number;
   readonly sizeJacketAdmin: number;
   readonly sizeDropSizeAdmin: number;
