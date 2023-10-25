@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { useContext, useState } from "react";
 import { useQueryClient } from "react-query";
+import { useLocation } from "react-router-dom";
 import { TRentalCoordinateShowResponse } from "../../hooks/api/UseRentalCoordinateShow";
 import { useRentalCoordinateUpdate } from "../../hooks/api/UseRentalCoordinateUpdate";
 import { useRentalRequestShow } from "../../hooks/api/UseRentalRequestShow";
@@ -27,6 +28,8 @@ export const RentalConfirm = ({
   rentalCoordinate,
   onClickBackButton,
 }: TProps) => {
+  const CREATING_COORDINATE = 10;
+  const search = useLocation().search;
   const { rentalId } = useContext(RentalIdContext);
   const queryClient = useQueryClient();
   const {
@@ -41,6 +44,10 @@ export const RentalConfirm = ({
     useRentalRequestShow({ rentalId });
   const [selectedCoordinateChoiceId, setSelectedCoordinateChoiceId] =
     useState<number>(rentalCoordinate.coordinateChoiceId);
+
+  const statusQuery = new URLSearchParams(search);
+  const isRentalStatusCreatingCoordinate =
+    parseInt(statusQuery.get("status") ?? "") === CREATING_COORDINATE;
 
   const isNotYetAllPicked = rentalCoordinate.items.some(
     (item) => item.locationId !== null,
@@ -83,10 +90,14 @@ export const RentalConfirm = ({
             disabled={
               isUpdateShipmentStatusLoading ||
               rentalCoordinate.items.length !== 3 ||
-              isNotYetAllPicked
+              isNotYetAllPicked ||
+              !isRentalStatusCreatingCoordinate
             }
             onClick={() => {
-              if (window.confirm("出荷準備に移動しますか？")) {
+              if (
+                isRentalStatusCreatingCoordinate &&
+                window.confirm("出荷準備に移動しますか？")
+              ) {
                 updateStatus(undefined, {
                   onSuccess: () => {
                     alert("登録しました");
