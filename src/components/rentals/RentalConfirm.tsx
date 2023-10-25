@@ -42,6 +42,10 @@ export const RentalConfirm = ({
   const [selectedCoordinateChoiceId, setSelectedCoordinateChoiceId] =
     useState<number>(rentalCoordinate.coordinateChoiceId);
 
+  const isNotYetAllPicked = rentalCoordinate.items.some(
+    (item) => item.locationId !== null,
+  );
+
   if (rentalRequestError)
     return <Typography>{rentalRequestError.message}</Typography>;
 
@@ -79,7 +83,7 @@ export const RentalConfirm = ({
             disabled={
               isUpdateShipmentStatusLoading ||
               rentalCoordinate.items.length !== 3 ||
-              rentalCoordinate.items.some((item) => item.locationId !== null)
+              isNotYetAllPicked
             }
             onClick={() => {
               if (window.confirm("出荷準備に移動しますか？")) {
