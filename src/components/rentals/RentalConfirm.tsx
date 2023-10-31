@@ -13,6 +13,7 @@ import {
 import { useContext, useState } from "react";
 import { useQueryClient } from "react-query";
 import { useLocation } from "react-router-dom";
+import { CREATING_COORDINATE } from "../../constants/rentalStatus";
 import { TRentalCoordinateShowResponse } from "../../hooks/api/UseRentalCoordinateShow";
 import { useRentalCoordinateUpdate } from "../../hooks/api/UseRentalCoordinateUpdate";
 import { useRentalRequestShow } from "../../hooks/api/UseRentalRequestShow";
@@ -28,7 +29,6 @@ export const RentalConfirm = ({
   rentalCoordinate,
   onClickBackButton,
 }: TProps) => {
-  const CREATING_COORDINATE = 10;
   const search = useLocation().search;
   const { rentalId } = useContext(RentalIdContext);
   const queryClient = useQueryClient();
