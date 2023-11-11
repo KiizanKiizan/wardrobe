@@ -1,4 +1,5 @@
 import { Alert, Box, Button, CircularProgress, Dialog, Snackbar, Typography } from "@mui/material";
+import { AxiosError } from "axios";
 import { useState } from "react";
 import { useQueryClient } from "react-query";
 import { useCoordinateHearingStatusShow } from "../../hooks/api/UseCoordinateHearingStatusShow";
@@ -78,8 +79,12 @@ export const CoordinateDescriptionLineSendButton = ({
                             `styling/coordinates/${coordinateId}/coordinate_hearing_status`,
                           );
                         },
-                        onError: (error) => {
-                          alert(error.message);
+                        onError(error: AxiosError) {
+                          alert(
+                            `ステータス更新に失敗しました。error message:  ${(
+                              error.response?.data as { message: string }
+                            )?.message}`,
+                          );
                         },
                       },
                     );

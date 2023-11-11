@@ -1,4 +1,5 @@
 import { Box, Button, Menu, MenuItem } from "@mui/material";
+import { AxiosError } from "axios";
 import { useState } from "react";
 import { useQueryClient } from "react-query";
 import { useCoordinateHearingStatusUpdate } from "../../hooks/api/UseCoordinateHearingStatusUpdate";
@@ -24,10 +25,7 @@ export const CoordinateHearingStatus = ({
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClickChangeStatus = (
-    coordinateId: number,
-    nextStatusId: number,
-  ) => {
+  const handleClickChangeStatus = (coordinateId: number, nextStatusId: number) => {
     if (!["提案済み", "修正待ち"].includes(currentStatus)) {
       if (!window.confirm("手動で変更しますか？")) return;
     }
@@ -36,12 +34,16 @@ export const CoordinateHearingStatus = ({
     mutate(
       { status: nextStatusId },
       {
-        onError: (error) => {
-          alert(error.message);
-        },
         onSuccess: () => {
           queryClient.invalidateQueries(
             `styling/coordinates/${coordinateId}/coordinate_hearing_status`,
+          );
+        },
+        onError(error: AxiosError) {
+          alert(
+            `ステータス更新に失敗しました。\n別タブで既にステータス更新処理が行われた可能性があります。\n再度ページをリロードしてください。\nerror message:  ${(
+              error.response?.data as { message: string }
+            )?.message}`,
           );
         },
       },

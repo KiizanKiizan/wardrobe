@@ -10,11 +10,15 @@ import {
   SelectChangeEvent,
   Typography,
 } from "@mui/material";
+import { AxiosError } from "axios";
 import { useContext, useState } from "react";
 import { useQueryClient } from "react-query";
+import { CREATING_COORDINATE_O_RENTAL_STATUS } from "../../constants/oRentalStatus";
 import { TRentalCoordinateShowResponse } from "../../hooks/api/UseRentalCoordinateShow";
 import { useRentalCoordinateUpdate } from "../../hooks/api/UseRentalCoordinateUpdate";
 import { useRentalRequestShow } from "../../hooks/api/UseRentalRequestShow";
+
+import { useRentalShow } from "../../hooks/api/UseRentalShow";
 import { useRentalUpdateToPreparingShipment } from "../../hooks/api/UseRentalUpdateToPreparingShipment";
 import { RentalIdContext } from "../context/RentalContextProvider";
 import { ItemConfirmCard } from "../shared/ItemConfirmCard";
@@ -30,6 +34,9 @@ export const RentalConfirm = ({ rentalCoordinate, onClickBackButton }: TProps) =
     useRentalCoordinateUpdate({
       rentalId,
     });
+  const { data: rentalStatusData, error: rentalStatusError } = useRentalShow({
+    rentalId,
+  });
   const { mutate: updateStatus, isLoading: isUpdateShipmentStatusLoading } =
     useRentalUpdateToPreparingShipment({ rentalId });
   const { data: rentalRequest, error: rentalRequestError } = useRentalRequestShow({ rentalId });
@@ -38,8 +45,9 @@ export const RentalConfirm = ({ rentalCoordinate, onClickBackButton }: TProps) =
   );
 
   if (rentalRequestError) return <Typography>{rentalRequestError.message}</Typography>;
+  if (rentalStatusError) return <Typography>{rentalStatusError.message}</Typography>;
 
-  if (!rentalRequest) return <CircularProgress />;
+  if (!rentalRequest || !rentalStatusData) return <CircularProgress />;
 
   return (
     <>
@@ -73,7 +81,8 @@ export const RentalConfirm = ({ rentalCoordinate, onClickBackButton }: TProps) =
             disabled={
               isUpdateShipmentStatusLoading ||
               rentalCoordinate.items.length !== 3 ||
-              rentalCoordinate.items.some((item) => item.locationId !== null)
+              rentalCoordinate.items.some((item) => item.locationId !== null) ||
+              rentalStatusData.rentalStatus !== CREATING_COORDINATE_O_RENTAL_STATUS
             }
             onClick={() => {
               if (window.confirm("出荷準備に移動しますか？")) {
@@ -81,9 +90,12 @@ export const RentalConfirm = ({ rentalCoordinate, onClickBackButton }: TProps) =
                   onSuccess: () => {
                     alert("登録しました");
                   },
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  onError: (error: any) => {
-                    alert(error.message);
+                  onError(error: AxiosError) {
+                    alert(
+                      `出荷準備の登録に失敗しました。 ${(
+                        error.response?.data as { message: string }
+                      )?.message}`,
+                    );
                   },
                 });
               }

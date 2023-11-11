@@ -5,7 +5,7 @@ type TParams = {
 };
 
 export const useCoordinateHearingStatusUpdate = (coordinateId: number) => {
-  const { mutate, isLoading } = usePatchRequest<TParams, Error>(
+  const { mutate, isLoading } = usePatchRequest<TParams>(
     `styling/coordinates/${coordinateId}/coordinate_hearing_status`,
   );
 
