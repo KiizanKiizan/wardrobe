@@ -43,10 +43,11 @@ export const useItemBrowseHandler = (
   choice: BrowseRefinementChoiceResponse,
   callback: ItemBrowseCallback,
 ): ItemBrowseHandler => {
-  const [currentRefinement, setCurrentRefinement] = useState<Refinement>(choice.defaultRefinement);
-  const [selectedPreregisteredItemId, setSelectedPreregisteredItemId] = useState<number | null>(
-    null,
+  const [currentRefinement, setCurrentRefinement] = useState<Refinement>(
+    choice.defaultRefinement,
   );
+  const [selectedPreregisteredItemId, setSelectedPreregisteredItemId] =
+    useState<number | null>(null);
 
   const onLargeCategoryChanged = (newId: number | null) => {
     const newRefinement = {
@@ -172,7 +173,9 @@ export const useItemBrowseHandler = (
   const ngHandler = useNgRefinementHandler(onNgChanged);
   const optionHandler = useOptionRefinementHandler(onOptionChanged);
 
-  const getAppliedFilterData = (choice: FilterChoiceResponse): AppliedFilterData[] => {
+  const getAppliedFilterData = (
+    choice: FilterChoiceResponse,
+  ): AppliedFilterData[] => {
     let result: AppliedFilterData[] = [];
 
     if (currentRefinement.itemId !== null) {
@@ -189,7 +192,10 @@ export const useItemBrowseHandler = (
     );
     if (appliedCategories.length) result = result.concat(appliedCategories);
 
-    const appliedSizes = sizeHandler.appliedFilters(choice.size, currentRefinement.sizeIds);
+    const appliedSizes = sizeHandler.appliedFilters(
+      choice.size,
+      currentRefinement.sizeIds,
+    );
     if (appliedSizes.length) result = result.concat(appliedSizes);
 
     const appliedPartSizes = partSizeHandler.appliedFilters(
@@ -198,7 +204,10 @@ export const useItemBrowseHandler = (
     );
     if (appliedPartSizes.length) result = result.concat(appliedPartSizes);
 
-    const appliedColors = colorHandler.appliedFilters(choice.color, currentRefinement.colorIds);
+    const appliedColors = colorHandler.appliedFilters(
+      choice.color,
+      currentRefinement.colorIds,
+    );
     if (appliedColors.length) result = result.concat(appliedColors);
 
     const appliedPatterns = patternHandler.appliedFilters(
@@ -207,16 +216,25 @@ export const useItemBrowseHandler = (
     );
     if (appliedPatterns.length) result = result.concat(appliedPatterns);
 
-    const appliedLogos = logoHandler.appliedFilters(choice.logo, currentRefinement.logoIds);
+    const appliedLogos = logoHandler.appliedFilters(
+      choice.logo,
+      currentRefinement.logoIds,
+    );
     if (appliedLogos.length) result = result.concat(appliedLogos);
 
     const appliedFormalRanks = {
       name: `キレイ度${currentRefinement.formalRank.min}~${currentRefinement.formalRank.max}`,
     };
-    if (currentRefinement.formalRank.min !== 1 || currentRefinement.formalRank.max !== 10)
+    if (
+      currentRefinement.formalRank.min !== 1 ||
+      currentRefinement.formalRank.max !== 10
+    )
       result = result.concat(appliedFormalRanks);
 
-    const appliedNgs = ngHandler.appliedFilters(choice.ng, currentRefinement.ngIds);
+    const appliedNgs = ngHandler.appliedFilters(
+      choice.ng,
+      currentRefinement.ngIds,
+    );
     if (appliedNgs.length) result = result.concat(appliedNgs);
 
     const appliedRank = currentRefinement.rank.map((rank) => {
@@ -226,15 +244,11 @@ export const useItemBrowseHandler = (
     });
     if (appliedRank.length) result = result.concat(appliedRank);
 
-    const appliedOptions = optionHandler.appliedFilters(choice.option, currentRefinement.optionIds);
+    const appliedOptions = optionHandler.appliedFilters(
+      choice.option,
+      currentRefinement.optionIds,
+    );
     if (appliedOptions.length) result = result.concat(appliedOptions);
-
-    const appliedMonths = currentRefinement.months.map((month) => {
-      return {
-        name: `${month}月`,
-      };
-    });
-    if (appliedMonths.length) result = result.concat(appliedMonths);
 
     return result;
   };
@@ -274,41 +288,59 @@ export const useItemBrowseHandler = (
     }
     if (currentRefinement.sizeIds.length > 0) {
       if (currentRefinement.sizeIds.length - 1 + currentIndex >= index) {
-        sizeHandler.deleteFilter(currentRefinement.sizeIds, index - currentIndex);
+        sizeHandler.deleteFilter(
+          currentRefinement.sizeIds,
+          index - currentIndex,
+        );
         return;
       }
       currentIndex += currentRefinement.sizeIds.length;
     }
     if (currentRefinement.partSizes.length > 0) {
       if (currentRefinement.partSizes.length - 1 + currentIndex >= index) {
-        partSizeHandler.deleteFilter(currentRefinement.partSizes, index - currentIndex);
+        partSizeHandler.deleteFilter(
+          currentRefinement.partSizes,
+          index - currentIndex,
+        );
         return;
       }
       currentIndex += currentRefinement.partSizes.length;
     }
     if (currentRefinement.colorIds.length > 0) {
       if (currentRefinement.colorIds.length - 1 + currentIndex >= index) {
-        colorHandler.deleteFilter(currentRefinement.colorIds, index - currentIndex);
+        colorHandler.deleteFilter(
+          currentRefinement.colorIds,
+          index - currentIndex,
+        );
         return;
       }
       currentIndex += currentRefinement.colorIds.length;
     }
     if (currentRefinement.patternIds.length > 0) {
       if (currentRefinement.patternIds.length - 1 + currentIndex >= index) {
-        patternHandler.deleteFilter(currentRefinement.patternIds, index - currentIndex);
+        patternHandler.deleteFilter(
+          currentRefinement.patternIds,
+          index - currentIndex,
+        );
         return;
       }
       currentIndex += currentRefinement.patternIds.length;
     }
     if (currentRefinement.logoIds.length > 0) {
       if (currentRefinement.logoIds.length - 1 + currentIndex >= index) {
-        logoHandler.deleteFilter(currentRefinement.logoIds, index - currentIndex);
+        logoHandler.deleteFilter(
+          currentRefinement.logoIds,
+          index - currentIndex,
+        );
         return;
       }
       currentIndex += currentRefinement.logoIds.length;
     }
 
-    if (currentRefinement.formalRank.min !== 1 || currentRefinement.formalRank.max !== 10) {
+    if (
+      currentRefinement.formalRank.min !== 1 ||
+      currentRefinement.formalRank.max !== 10
+    ) {
       if (currentIndex === index) {
         setCurrentRefinement({
           ...currentRefinement,
@@ -340,21 +372,13 @@ export const useItemBrowseHandler = (
 
     if (currentRefinement.optionIds.length > 0) {
       if (currentRefinement.optionIds.length - 1 + currentIndex >= index) {
-        optionHandler.deleteFilter(currentRefinement.optionIds, index - currentIndex);
+        optionHandler.deleteFilter(
+          currentRefinement.optionIds,
+          index - currentIndex,
+        );
         return;
       }
       currentIndex += currentRefinement.optionIds.length;
-    }
-
-    if (currentRefinement.months.length > 0) {
-      if (currentRefinement.months.length - 1 + currentIndex >= index) {
-        const newMonths = currentRefinement.months.filter(
-          (_, monthIndex) => monthIndex !== index - currentIndex,
-        );
-        setCurrentRefinement({ ...currentRefinement, months: newMonths });
-        return;
-      }
-      currentIndex += currentRefinement.months.length;
     }
   };
 
@@ -385,17 +409,26 @@ export const useItemBrowseHandler = (
         currentRefinement.mediumCategoryId,
         currentRefinement.smallCategoryIds,
       ),
-      sizeCallback: sizeHandler.sizeCallback(choice.filter.size, currentRefinement.sizeIds),
+      sizeCallback: sizeHandler.sizeCallback(
+        choice.filter.size,
+        currentRefinement.sizeIds,
+      ),
       partSizeCallback: partSizeHandler.partSizeCallback(
         choice.filter.partSize,
         currentRefinement.partSizes,
       ),
-      colorCallback: colorHandler.colorCallback(choice.filter.color, currentRefinement.colorIds),
+      colorCallback: colorHandler.colorCallback(
+        choice.filter.color,
+        currentRefinement.colorIds,
+      ),
       patternCallback: patternHandler.patternCallback(
         choice.filter.pattern,
         currentRefinement.patternIds,
       ),
-      logoCallback: logoHandler.logoCallback(choice.filter.logo, currentRefinement.logoIds),
+      logoCallback: logoHandler.logoCallback(
+        choice.filter.logo,
+        currentRefinement.logoIds,
+      ),
       dropSizeCallback: dropSizeHandler.dropSizeCallback(
         choice.filter.dropSize,
         currentRefinement.dropSizes,
@@ -408,7 +441,10 @@ export const useItemBrowseHandler = (
         };
         setCurrentRefinement(newRefinement);
       },
-      ngCallback: ngHandler.ngCallback(choice.filter.ng, currentRefinement.ngIds),
+      ngCallback: ngHandler.ngCallback(
+        choice.filter.ng,
+        currentRefinement.ngIds,
+      ),
       rankCallback: {
         onClick: (index: number) => {
           const newRank = [...currentRefinement.rank];
@@ -430,23 +466,6 @@ export const useItemBrowseHandler = (
         choice.filter.option,
         currentRefinement.optionIds,
       ),
-      monthsCallback: {
-        onClick: (index: number) => {
-          const newMonths = [...currentRefinement.months];
-          const targetMonth = choice.filter.months[index];
-          if (newMonths.includes(targetMonth)) {
-            newMonths.splice(newMonths.indexOf(targetMonth), 1);
-          } else {
-            newMonths.push(targetMonth);
-          }
-          const newRefinement = {
-            ...currentRefinement,
-            months: newMonths,
-            pageNo: 1,
-          };
-          setCurrentRefinement(newRefinement);
-        },
-      },
       onItemIdChanged: (newId: number) => {
         let newRefinement;
         if (newId) {
@@ -503,14 +522,26 @@ export const useItemBrowseHandler = (
         currentRefinement.mediumCategoryId,
         currentRefinement.smallCategoryIds,
       ),
-      sizeData: sizeHandler.sizeData(choice.filter.size, currentRefinement.sizeIds),
+      sizeData: sizeHandler.sizeData(
+        choice.filter.size,
+        currentRefinement.sizeIds,
+      ),
       partSizeData: partSizeHandler.partSizeData(
         choice.filter.partSize,
         currentRefinement.partSizes,
       ),
-      colorData: colorHandler.colorData(choice.filter.color, currentRefinement.colorIds),
-      patternData: patternHandler.patternData(choice.filter.pattern, currentRefinement.patternIds),
-      logoData: logoHandler.logoData(choice.filter.logo, currentRefinement.logoIds),
+      colorData: colorHandler.colorData(
+        choice.filter.color,
+        currentRefinement.colorIds,
+      ),
+      patternData: patternHandler.patternData(
+        choice.filter.pattern,
+        currentRefinement.patternIds,
+      ),
+      logoData: logoHandler.logoData(
+        choice.filter.logo,
+        currentRefinement.logoIds,
+      ),
       dropSizeData: dropSizeHandler.dropSizeData(
         choice.filter.dropSize,
         currentRefinement.dropSizes,
@@ -523,13 +554,10 @@ export const useItemBrowseHandler = (
           isSelected: currentRefinement.rank.includes(rank),
         };
       }),
-      optionData: optionHandler.optionData(choice.filter.option, currentRefinement.optionIds),
-      monthsData: choice.filter.months.map((month) => {
-        return {
-          name: `${month}月`,
-          isSelected: currentRefinement.months.includes(month),
-        };
-      }),
+      optionData: optionHandler.optionData(
+        choice.filter.option,
+        currentRefinement.optionIds,
+      ),
     };
   };
 

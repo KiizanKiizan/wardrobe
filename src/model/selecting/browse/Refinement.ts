@@ -18,5 +18,4 @@ export interface Refinement {
   readonly sortId: number;
   readonly rank: string[];
   readonly pageNo: number;
-  readonly months: number[];
 }

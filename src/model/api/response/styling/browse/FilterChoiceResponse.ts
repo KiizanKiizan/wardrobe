@@ -15,5 +15,4 @@ export interface FilterChoiceResponse {
   readonly formalRank: FilterFormalRankResponse;
   readonly ng: FilterResponse[];
   readonly option: FilterResponse[];
-  readonly months: number[];
 }
