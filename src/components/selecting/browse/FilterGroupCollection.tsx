@@ -188,6 +188,22 @@ export const FilterGroupCollection = (props: FilterGroupCollectionProps) => {
           aria-controls="filter7a-content"
           id="filter7a-header"
         >
+          <Typography variant="body2">季節ルール</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <FilterCheckboxArray
+            labelIdPrefix="option-checkbox-list-label-"
+            data={props.data.monthsData}
+            callback={props.callback.monthsCallback}
+          />
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMore />}
+          aria-controls="filter7a-content"
+          id="filter7a-header"
+        >
           <Typography variant="body2">その他</Typography>
         </AccordionSummary>
         <AccordionDetails>

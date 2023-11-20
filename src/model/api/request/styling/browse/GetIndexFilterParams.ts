@@ -16,4 +16,5 @@ export interface GetIndexFilterParams {
   ng?: number[];
   option: number[];
   rank: string[];
+  months: number[];
 }

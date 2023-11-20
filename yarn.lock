@@ -2183,7 +2183,7 @@
 
 "@kiizan_kiizan/eslint-config@^0.0.7":
   version "0.0.7"
-  resolved "https://registry.npmjs.org/@kiizan_kiizan/eslint-config/-/eslint-config-0.0.7.tgz#68a3f66b1bd29479066ae02ef7d7ee86574f4d21"
+  resolved "https://registry.yarnpkg.com/@kiizan_kiizan/eslint-config/-/eslint-config-0.0.7.tgz#68a3f66b1bd29479066ae02ef7d7ee86574f4d21"
   integrity sha512-AwAoZ7QsAaB4QTaeJ8u+9884wDgbMrM+ICepaUA8tOVf+vDFYpoLDELmsfpaEm6fTpvTW2+/OcN4d1YmRNkIzw==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^6.9.0"

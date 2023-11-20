@@ -33,6 +33,7 @@ export const useBrowsesIndex = ({ refinement, chartId }: TBrowsesIndexArg): Brow
       ng: refinement.ngIds,
       option: refinement.optionIds,
       rank: refinement.rank,
+      months: refinement.months,
     };
     if (refinement.mediumCategoryId) filterParams.mediumCategory = refinement.mediumCategoryId;
     if (refinement.largeCategoryId) filterParams.largeCategory = refinement.largeCategoryId;

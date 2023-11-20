@@ -17,9 +17,10 @@ export interface FilterGroupCollectionData {
   readonly ngData: FilterCheckboxData[];
   readonly rankData: FilterCheckboxData[];
   readonly optionData: FilterCheckboxData[];
+  readonly monthsData: FilterCheckboxData[];
 }
 
 export type TRentalFilterGroupCollectionData = Omit<
   FilterGroupCollectionData,
-  "ngData"
+  "ngData" | "monthsData"
 >;

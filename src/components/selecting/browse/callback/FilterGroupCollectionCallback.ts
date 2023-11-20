@@ -18,9 +18,10 @@ export interface FilterGroupCollectionCallback {
   rankCallback: FilterCheckboxArrayCallback;
   optionCallback: FilterCheckboxArrayCallback;
   onItemIdChanged: (newId: number) => void;
+  monthsCallback: FilterCheckboxArrayCallback;
 }
 
 export type TRentalFilterGroupCollectionCallback = Omit<
   FilterGroupCollectionCallback,
-  "ngCallback"
+  "ngCallback" | "monthsCallback"
 >;
