@@ -37,13 +37,13 @@ export const convertMemberSizeToParams = (
     bustJacket: valueIfChangedPart("bust", "jacketSize"),
     lengthTop: valueIfChangedPart("lengthTop", "size"),
     lengthTopJacket: valueIfChangedPart("lengthTop", "jacketSize"),
-    lengthArm: valueIfChangedPart("lengthArm", "size"),
+    sleeveLength: valueIfChangedPart("sleeveLength", "size"),
     lengthArmJacket: valueIfChangedPart("lengthArm", "jacketSize"),
     waist: valueIfChangedPart("waist", "size"),
     hip: valueIfChangedPart("hip", "size"),
     roundLeg: valueIfChangedPart("roundLeg", "size"),
-    lengthLeg: valueIfChangedPart("lengthLeg", "size"),
-    roundCalf: valueIfChangedPart("roundCalf", "size"),
+    outseam: valueIfChangedPart("outseam", "size"),
+    hemWidth: valueIfChangedPart("hemWidth", "size"),
   };
 
   (Object.keys(updateSizes) as (keyof UpdateSizes)[]).forEach(

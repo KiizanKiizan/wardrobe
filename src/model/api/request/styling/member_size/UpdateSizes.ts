@@ -10,11 +10,11 @@ export interface UpdateSizes {
   bustJacket?: number | null;
   lengthTop?: number | null;
   lengthTopJacket?: number | null;
-  lengthArm?: number | null;
+  sleeveLength?: number | null;
   lengthArmJacket?: number | null;
   waist?: number | null;
   hip?: number | null;
   roundLeg?: number | null;
-  lengthLeg?: number | null;
-  roundCalf?: number | null;
+  outseam?: number | null;
+  hemWidth?: number | null;
 }

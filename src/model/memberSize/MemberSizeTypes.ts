@@ -31,12 +31,12 @@ export type TMemberPartSizesKey =
   | "shoulder"
   | "bust"
   | "lengthTop"
-  | "lengthArm"
+  | "sleeveLength"
   | "waist"
   | "hip"
   | "roundLeg"
-  | "lengthLeg"
-  | "roundCalf";
+  | "outseam"
+  | "hemWidth";
 
 export type TMemberPartSizes = {
   [key in TMemberPartSizesKey]: TMemberPartSize;

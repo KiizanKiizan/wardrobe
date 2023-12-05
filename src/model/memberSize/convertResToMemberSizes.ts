@@ -52,7 +52,7 @@ export const convertResToMemberSizes = (response: MemberSizeShowResponse): TMemb
         jacketSize: response.lengthTopJacket,
         referenceSize: response.referenceLengthBodySize,
       },
-      lengthArm: {
+      sleeveLength: {
         label: "裄丈",
         size: response.sleeveLength,
         jacketSize: response.lengthArmJacket,
@@ -73,12 +73,12 @@ export const convertResToMemberSizes = (response: MemberSizeShowResponse): TMemb
         size: response.roundLeg,
         referenceSize: response.referenceRoundLegSize,
       },
-      lengthLeg: {
+      outseam: {
         label: "総丈",
         size: response.outseam,
         referenceSize: response.referenceOutseamSize,
       },
-      roundCalf: {
+      hemWidth: {
         label: "裾幅",
         size: response.hemWidth,
         referenceSize: response.referenceHemWidthSize,
