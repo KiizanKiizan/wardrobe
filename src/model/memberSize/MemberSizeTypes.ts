@@ -28,7 +28,7 @@ export type TMemberBasicSizes = {
 };
 
 export type TMemberPartSizesKey =
-  | "sholder"
+  | "shoulder"
   | "bust"
   | "lengthTop"
   | "lengthArm"

@@ -14,9 +14,7 @@ export const convertMemberSizeToParams = (
 ): MemberSizeUpdateParams => {
   const valueIfChangedBasic = (sizeName: TMemberBasicSizesEditableKey) => {
     const editingValue = editingSizes.basicSizes[sizeName];
-    return fetchedSizes.basicSizes[sizeName] !== editingValue
-      ? editingValue
-      : undefined;
+    return fetchedSizes.basicSizes[sizeName] !== editingValue ? editingValue : undefined;
   };
 
   const valueIfChangedPart = (
@@ -24,9 +22,7 @@ export const convertMemberSizeToParams = (
     sizeName: TMemberPartSizeEditableKey,
   ) => {
     const editingValue = editingSizes.partSizes[partName][sizeName];
-    return fetchedSizes.partSizes[partName][sizeName] !== editingValue
-      ? editingValue
-      : undefined;
+    return fetchedSizes.partSizes[partName][sizeName] !== editingValue ? editingValue : undefined;
   };
 
   const updateSizes: UpdateSizes = {
@@ -35,8 +31,8 @@ export const convertMemberSizeToParams = (
     sizeTopsAdmin: valueIfChangedBasic("topsAdmin"),
     sizeJacketAdmin: valueIfChangedBasic("jacketAdmin"),
     sizeDropSizeAdmin: valueIfChangedBasic("dropSizeAdmin"),
-    shoulder: valueIfChangedPart("sholder", "size"),
-    shoulderJacket: valueIfChangedPart("sholder", "jacketSize"),
+    shoulder: valueIfChangedPart("shoulder", "size"),
+    shoulderJacket: valueIfChangedPart("shoulder", "jacketSize"),
     bust: valueIfChangedPart("bust", "size"),
     bustJacket: valueIfChangedPart("bust", "jacketSize"),
     lengthTop: valueIfChangedPart("lengthTop", "size"),
