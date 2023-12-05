@@ -1,13 +1,7 @@
 import { MemberSizeShowResponse } from "../api/response/styling/member_size/MemberSizeShowResponse";
-import {
-  TMemberBasicSizes,
-  TMemberPartSizes,
-  TMemberSizes,
-} from "./MemberSizeTypes";
+import { TMemberBasicSizes, TMemberPartSizes, TMemberSizes } from "./MemberSizeTypes";
 
-export const convertResToMemberSizes = (
-  response: MemberSizeShowResponse
-): TMemberSizes => {
+export const convertResToMemberSizes = (response: MemberSizeShowResponse): TMemberSizes => {
   const basicSizes = (): TMemberBasicSizes => {
     const {
       sizeTops: tops,
@@ -40,7 +34,7 @@ export const convertResToMemberSizes = (
 
   const partSizes = (): TMemberPartSizes => {
     return {
-      sholder: {
+      shoulder: {
         label: "肩幅",
         size: response.shoulder,
         jacketSize: response.shoulderJacket,
@@ -59,10 +53,10 @@ export const convertResToMemberSizes = (
         referenceSize: response.referenceLengthBodySize,
       },
       lengthArm: {
-        label: "腕の長さ",
-        size: response.lengthArm,
+        label: "裄丈",
+        size: response.sleeveLength,
         jacketSize: response.lengthArmJacket,
-        referenceSize: response.referenceLengthArm,
+        referenceSize: response.referenceSleeveLength,
       },
       waist: {
         label: "ウエスト",
@@ -80,14 +74,14 @@ export const convertResToMemberSizes = (
         referenceSize: response.referenceRoundLegSize,
       },
       lengthLeg: {
-        label: "股下",
-        size: response.lengthLeg,
-        referenceSize: response.referenceLengthLegSize,
+        label: "総丈",
+        size: response.outseam,
+        referenceSize: response.referenceOutseamSize,
       },
       roundCalf: {
-        label: "ふくらはぎ周り",
-        size: response.roundCalf,
-        referenceSize: response.referenceRoundCalfSize,
+        label: "裾幅",
+        size: response.hemWidth,
+        referenceSize: response.referenceHemWidthSize,
       },
     };
   };

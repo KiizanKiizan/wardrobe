@@ -19,19 +19,19 @@ export interface MemberSizeShowResponse {
   readonly lengthTop: number;
   readonly lengthTopJacket: number;
   readonly referenceLengthBodySize: number;
-  readonly lengthArm: number;
+  readonly sleeveLength: number;
   readonly lengthArmJacket: number;
-  readonly referenceLengthArm: number;
+  readonly referenceSleeveLength: number;
   readonly waist: number;
   readonly referenceWaistSize: number;
   readonly hip: number;
   readonly referenceHipSize: number;
   readonly roundLeg: number;
   readonly referenceRoundLegSize: number;
-  readonly lengthLeg: number;
-  readonly referenceLengthLegSize: number;
-  readonly roundCalf: number;
-  readonly referenceRoundCalfSize: number;
+  readonly outseam: number;
+  readonly referenceOutseamSize: number;
+  readonly hemWidth: number;
+  readonly referenceHemWidthSize: number;
   readonly choices: {
     readonly shapeWaist: string;
     readonly shoulder: string;
