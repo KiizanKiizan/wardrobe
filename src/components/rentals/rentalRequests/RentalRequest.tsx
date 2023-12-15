@@ -32,10 +32,7 @@ const StackColumn = (props: StackProps) => {
 const StackRow = (props: StackProps) => {
   return <Stack {...props} direction={"row"} spacing={4} />;
 };
-export const RentalRequest = ({
-  rentalRequestResponse,
-  coordinateChoiceId,
-}: TProps) => {
+export const RentalRequest = ({ rentalRequestResponse, coordinateChoiceId }: TProps) => {
   const referenceSizes = [
     {
       part: "肩幅",
@@ -52,8 +49,8 @@ export const RentalRequest = ({
       size: rentalRequestResponse.referenceLengthBodySize,
     },
     {
-      part: "腕の長さ",
-      size: rentalRequestResponse.referenceLengthArm,
+      part: "裄丈",
+      size: rentalRequestResponse.referenceSleeveLengthSize,
     },
     {
       part: "ウエスト",
@@ -70,12 +67,12 @@ export const RentalRequest = ({
       size: rentalRequestResponse.referenceRoundLegSize,
     },
     {
-      part: "股下",
-      size: rentalRequestResponse.referenceLengthLegSize,
+      part: "総丈",
+      size: rentalRequestResponse.referenceOutSeamSize,
     },
     {
-      part: "ふくらはぎ周り",
-      size: rentalRequestResponse.referenceRoundCalfSize,
+      part: "裾幅",
+      size: rentalRequestResponse.referenceHemWidthSize,
     },
   ];
 
@@ -116,9 +113,7 @@ export const RentalRequest = ({
             <StackColumn>
               <Typography>本人</Typography>
               <EmphasizedText>
-                <EmphasizedText>
-                  {rentalRequestResponse.bottomsSize}
-                </EmphasizedText>
+                <EmphasizedText>{rentalRequestResponse.bottomsSize}</EmphasizedText>
               </EmphasizedText>
             </StackColumn>
           </Stack>
@@ -133,9 +128,7 @@ export const RentalRequest = ({
             <StackRow>
               <StackColumn>
                 <Typography>ドロップサイズ</Typography>
-                <EmphasizedText>
-                  {rentalRequestResponse.referenceJacketDropSize}
-                </EmphasizedText>
+                <EmphasizedText>{rentalRequestResponse.referenceJacketDropSize}</EmphasizedText>
               </StackColumn>
             </StackRow>
             <StackColumn>
@@ -171,9 +164,7 @@ export const RentalRequest = ({
                       </Typography>
                     </StyledTableCell>
                     <StyledTableCell>{referenceSize.size} cm</StyledTableCell>
-                    <StyledTableCell>
-                      {referenceSize.option ?? ""}
-                    </StyledTableCell>
+                    <StyledTableCell>{referenceSize.option ?? ""}</StyledTableCell>
                   </StyledTableRow>
                 );
               })}
@@ -208,18 +199,12 @@ export const RentalRequest = ({
                     <Typography
                       variant="h6"
                       style={{
-                        fontWeight:
-                          coordinateChoiceId === coordinateChoice.id
-                            ? "bold"
-                            : "normal",
+                        fontWeight: coordinateChoiceId === coordinateChoice.id ? "bold" : "normal",
                       }}
                     >{`第${index + 1}希望`}</Typography>
                     <Typography
                       style={{
-                        fontWeight:
-                          coordinateChoiceId === coordinateChoice.id
-                            ? "bold"
-                            : "normal",
+                        fontWeight: coordinateChoiceId === coordinateChoice.id ? "bold" : "normal",
                       }}
                     >
                       {coordinateChoice.name}
