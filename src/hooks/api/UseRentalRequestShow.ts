@@ -22,12 +22,12 @@ export type TRentalRequestShowResponse = {
   referenceShoulderSize: number;
   referenceBustSize: number;
   referenceWaistSize: number;
-  referenceLengthArm: number;
+  referenceSleeveLengthSize: number;
   referenceHipSize: number;
   referenceRoundLegSize: number;
-  referenceRoundCalfSize: number;
+  referenceHemWidthSize: number;
   referenceLengthBodySize: number;
-  referenceLengthLegSize: number;
+  referenceOutSeamSize: number;
 };
 
 type TCoordinateChoice = {
