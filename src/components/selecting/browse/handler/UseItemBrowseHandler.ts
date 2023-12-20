@@ -13,7 +13,6 @@ import { FilterGroupCollectionCallback } from "../callback/FilterGroupCollection
 import { ItemBrowseCallback } from "../callback/ItemBrowseCallback";
 import { ItemBrowsePaginationCallback } from "../callback/ItemBrowsePaginationCallback";
 import { ItemCardCollectionCallback } from "../callback/ItemCardCollectionCallback";
-import { ranks } from "./../../../../model/shared/Rank";
 import { useCategoryRefinementHandler } from "./UseCategoryRefinementHandler";
 import { useColorRefinementHandler } from "./UseColorRefinementHandler";
 import { useDropSizeRefinementHandler } from "./UseDropSizeRefinementHandler";
@@ -22,6 +21,7 @@ import { useNgRefinementHandler } from "./UseNgRefinementHandler";
 import { useOptionRefinementHandler } from "./UseOptionRefinementHandler";
 import { usePartSizeRefinementHandler } from "./UsePartSizeRefinementHandler";
 import { usePatternRefinementHandler } from "./UsePatternRefinementHandler";
+import { useRankRefinementHandler } from "./UseRankRefinementHandler";
 import { useSizeRefinementHandler } from "./UseSizeRefinementHandler";
 
 export interface ItemBrowseHandler {
@@ -157,6 +157,15 @@ export const useItemBrowseHandler = (
     setCurrentRefinement(newRefinement);
   };
 
+  const onRankChanged = (newIds: number[]) => {
+    const newRefinement = {
+      ...currentRefinement,
+      rankIds: newIds,
+      pageNo: 1,
+    };
+    setCurrentRefinement(newRefinement);
+  };
+
   const categoryHandler = useCategoryRefinementHandler({
     onLargeCategoryChange: onLargeCategoryChanged,
     onMediumCategoryChange: onMediumCategoryChanged,
@@ -171,6 +180,7 @@ export const useItemBrowseHandler = (
   const dropSizeHandler = useDropSizeRefinementHandler(onDropSizeChanged);
   const ngHandler = useNgRefinementHandler(onNgChanged);
   const optionHandler = useOptionRefinementHandler(onOptionChanged);
+  const rankHandler = useRankRefinementHandler(onRankChanged);
 
   const getAppliedFilterData = (choice: FilterChoiceResponse): AppliedFilterData[] => {
     let result: AppliedFilterData[] = [];
@@ -219,12 +229,8 @@ export const useItemBrowseHandler = (
     const appliedNgs = ngHandler.appliedFilters(choice.ng, currentRefinement.ngIds);
     if (appliedNgs.length) result = result.concat(appliedNgs);
 
-    const appliedRank = currentRefinement.rank.map((rank) => {
-      return {
-        name: `ランク: ${rank}`,
-      };
-    });
-    if (appliedRank.length) result = result.concat(appliedRank);
+    const appliedRanks = rankHandler.appliedFilters(choice.rank, currentRefinement.rankIds);
+    if (appliedRanks.length) result = result.concat(appliedRanks);
 
     const appliedOptions = optionHandler.appliedFilters(choice.option, currentRefinement.optionIds);
     if (appliedOptions.length) result = result.concat(appliedOptions);
@@ -327,15 +333,12 @@ export const useItemBrowseHandler = (
       currentIndex += currentRefinement.ngIds.length;
     }
 
-    if (currentRefinement.rank.length > 0) {
-      if (currentRefinement.rank.length - 1 + currentIndex >= index) {
-        const newRank = currentRefinement.rank.filter(
-          (_, rankIndex) => rankIndex !== index - currentIndex,
-        );
-        setCurrentRefinement({ ...currentRefinement, rank: newRank });
+    if (currentRefinement.rankIds.length > 0) {
+      if (currentRefinement.rankIds.length - 1 + currentIndex >= index) {
+        rankHandler.deleteFilter(currentRefinement.rankIds, index - currentIndex);
         return;
       }
-      currentIndex += currentRefinement.rank.length;
+      currentIndex += currentRefinement.rankIds.length;
     }
 
     if (currentRefinement.optionIds.length > 0) {
@@ -409,23 +412,7 @@ export const useItemBrowseHandler = (
         setCurrentRefinement(newRefinement);
       },
       ngCallback: ngHandler.ngCallback(choice.filter.ng, currentRefinement.ngIds),
-      rankCallback: {
-        onClick: (index: number) => {
-          const newRank = [...currentRefinement.rank];
-          const targetRank = ranks[index];
-          if (newRank.includes(targetRank)) {
-            newRank.splice(newRank.indexOf(targetRank), 1);
-          } else {
-            newRank.push(ranks[index]);
-          }
-          const newRefinement = {
-            ...currentRefinement,
-            rank: newRank,
-            pageNo: 1,
-          };
-          setCurrentRefinement(newRefinement);
-        },
-      },
+      rankCallback: rankHandler.rankCallback(choice.filter.rank, currentRefinement.rankIds),
       optionCallback: optionHandler.optionCallback(
         choice.filter.option,
         currentRefinement.optionIds,
@@ -517,12 +504,7 @@ export const useItemBrowseHandler = (
       ),
       formalRankData: currentRefinement.formalRank,
       ngData: ngHandler.ngData(choice.filter.ng, currentRefinement.ngIds),
-      rankData: ranks.map((rank) => {
-        return {
-          name: rank,
-          isSelected: currentRefinement.rank.includes(rank),
-        };
-      }),
+      rankData: rankHandler.rankData(choice.filter.rank, currentRefinement.rankIds),
       optionData: optionHandler.optionData(choice.filter.option, currentRefinement.optionIds),
       monthsData: choice.filter.months.map((month) => {
         return {

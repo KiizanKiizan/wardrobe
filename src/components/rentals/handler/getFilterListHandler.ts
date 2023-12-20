@@ -122,11 +122,12 @@ export const getFilterListHandler = ({
   };
 
   const appliedRankFilter = (): TRentalAppliedFilterData[] => {
-    return currentRefinement.rank.map((rank: string, index: number) => {
+    return currentRefinement.rankIds.map((rankId: number) => {
       return {
-        name: rank,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        name: filter.rank.find((rank) => rank.id === rankId)!.name,
         type: "rank",
-        id: index,
+        id: rankId,
       };
     });
   };
@@ -234,7 +235,7 @@ export const getFilterListHandler = ({
       case "rank":
         onChangeCurrentRefinement({
           ...currentRefinement,
-          rank: currentRefinement.rank.filter((_, index) => index !== id),
+          rankIds: currentRefinement.rankIds.filter((rId) => rId !== id),
         });
         break;
       case "option":

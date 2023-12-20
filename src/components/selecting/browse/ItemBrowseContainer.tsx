@@ -1,9 +1,9 @@
 import { CircularProgress, Typography } from "@mui/material";
 import { useBrowsesRefinementChoice } from "../../../hooks/api/UseBrowsesRefinementChoice";
-import { ChartIdContext } from "../../context/provider/ContextProvider";
 import { useContextDefinedState } from "../../context/UseContextDefinedState";
-import { ItemBrowseCallback } from "./callback/ItemBrowseCallback";
+import { ChartIdContext } from "../../context/provider/ContextProvider";
 import { ItemBrowse } from "./ItemBrowse";
+import { ItemBrowseCallback } from "./callback/ItemBrowseCallback";
 
 export interface ItemBrowseContainerProps {
   callback: ItemBrowseCallback;

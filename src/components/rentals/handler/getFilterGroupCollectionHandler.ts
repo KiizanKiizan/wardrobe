@@ -5,7 +5,6 @@ import { FormalRankRefinement } from "../../../model/selecting/browse/FormalRank
 import { Refinement } from "../../../model/selecting/browse/Refinement";
 import { FilterCategoryGroupData } from "../../../model/selecting/browse/props_data/FilterCategoryGroupData";
 import { TRentalFilterGroupCollectionData } from "../../../model/selecting/browse/props_data/FilterGroupCollectionData";
-import { ranks } from "../../../model/shared/Rank";
 import { FilterCategoryGroupCallback } from "../../selecting/browse/callback/FilterCategoryGroupCallback";
 import { FilterCheckboxArrayCallback } from "../../selecting/browse/callback/FilterCheckboxArrayCallback";
 import { TRentalFilterGroupCollectionCallback } from "../../selecting/browse/callback/FilterGroupCollectionCallback";
@@ -124,10 +123,10 @@ export const getFilterGroupCollectionHandler = ({
         };
       }),
       formalRankData: currentRefinement.formalRank,
-      rankData: ranks.map((rank) => {
+      rankData: filter.rank.map((filter) => {
         return {
-          name: rank,
-          isSelected: currentRefinement.rank.includes(rank),
+          name: filter.name,
+          isSelected: currentRefinement.rankIds.includes(filter.id),
         };
       }),
       optionData: filter.option.map((filter) => {
@@ -353,16 +352,17 @@ export const getFilterGroupCollectionHandler = ({
       },
       rankCallback: {
         onClick: (index: number) => {
-          const newRank = [...currentRefinement.rank];
-          const targetRank = ranks[index];
-          if (newRank.includes(targetRank)) {
-            newRank.splice(newRank.indexOf(targetRank), 1);
+          const selectedId = filter.rank[index].id;
+          const currentIndex = currentRefinement.rankIds.indexOf(selectedId);
+          const newIds = [...currentRefinement.rankIds];
+          if (currentIndex === -1) {
+            newIds.push(selectedId);
           } else {
-            newRank.push(ranks[index]);
+            newIds.splice(currentIndex, 1);
           }
           const newRefinement = {
             ...currentRefinement,
-            rank: newRank,
+            rankIds: newIds,
             pageNo: 1,
           };
           onChangeCurrentRefinement(newRefinement);

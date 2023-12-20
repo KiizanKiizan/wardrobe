@@ -1,12 +1,11 @@
 import { FormControl, Select, Toolbar, Typography } from "@mui/material";
-import React from "react";
-import { useItemBrowseHandler } from "./handler/UseItemBrowseHandler";
-import { FilterGroupCollection } from "./FilterGroupCollection";
-import { AppliedFilterArray } from "./AppliedFilterArray";
 import { BrowseRefinementChoiceResponse } from "../../../model/api/response/styling/browse/BrowseRefinementChoiceResponse";
-import { useBrowseIndexProvider } from "./provider/UseBrowseIndexProvider";
+import { AppliedFilterArray } from "./AppliedFilterArray";
 import { BrowseDetailContainer } from "./BrowseDetailContainer";
+import { FilterGroupCollection } from "./FilterGroupCollection";
 import { ItemBrowseCallback } from "./callback/ItemBrowseCallback";
+import { useItemBrowseHandler } from "./handler/UseItemBrowseHandler";
+import { useBrowseIndexProvider } from "./provider/UseBrowseIndexProvider";
 import { useItemBrowseStyle } from "./style/UseItemBrowseStyle";
 
 export interface ItemBrowseProps {
@@ -38,9 +37,7 @@ export const ItemBrowse = (props: ItemBrowseProps) => {
         アイテム一覧
       </Typography>
       <Toolbar className={classes.itemBrowseHeader}>
-        <div className={classes.searchResult}>
-          {provider.totalItemCountComponent()}
-        </div>
+        <div className={classes.searchResult}>{provider.totalItemCountComponent()}</div>
         <div className={classes.appliedFilterContainer}>
           <Typography>適用済みフィルター</Typography>
           <AppliedFilterArray
@@ -51,11 +48,7 @@ export const ItemBrowse = (props: ItemBrowseProps) => {
         <div>
           <Typography>並べ替え</Typography>
           <FormControl className={classes.sortSelection}>
-            <Select
-              native
-              value={handler.selectedSortIndex()}
-              onChange={handler.onSortChanged()}
-            >
+            <Select native value={handler.selectedSortIndex()} onChange={handler.onSortChanged()}>
               {handler.sortSelection().map((row, index) => (
                 <option value={index} key={index}>
                   {row}
@@ -70,9 +63,7 @@ export const ItemBrowse = (props: ItemBrowseProps) => {
           data={handler.filterGroupCollectionData()}
           callback={handler.filterGroupCollectionCallback()}
         />
-        {provider.itemCardCollectionComponent(
-          handler.itemCardCollectionCallback()
-        )}
+        {provider.itemCardCollectionComponent(handler.itemCardCollectionCallback())}
       </div>
       <div className={classes.paginationContainer}>
         {provider.paginationComponent(handler.paginationCallback())}
